@@ -1,37 +1,37 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useNavigationContainerRef } from "@react-navigation/native";
-import { Stack } from "expo-router";
+// app/_layout.tsx
+import React from "react";
+import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import HomeScreen from "./index";
-import ExploreScreen from "./explore";
-
-const Tab = createBottomTabNavigator();
 
 export default function Layout() {
-  const navigationRef = useNavigationContainerRef();
-
   return (
-    <>
-      {/* Stack Navigator (For future screens like Profile, Settings, etc.) */}
-      <Stack.Screen options={{ headerShown: false }} />
-      
-      {/* Bottom Tab Navigator */}
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-            let iconName;
-            if (route.name === "Home") iconName = "home";
-            else if (route.name === "Explore") iconName = "compass";
-            return <Ionicons name={iconName as any} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: "blue",
-          tabBarInactiveTintColor: "gray",
-          headerShown: false,
-        })}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Explore" component={ExploreScreen} />
-      </Tab.Navigator>
-    </>
+    <Tabs
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+          if (route.name === "index") iconName = "home-outline";
+          else if (route.name === "explore") iconName = "compass-outline";
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "blue",
+        tabBarInactiveTintColor: "gray",
+        headerShown: false,
+      })}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          tabBarLabel: "Home",
+          title: "Home",
+        }}
+      />
+      <Tabs.Screen
+        name="explore"
+        options={{
+          tabBarLabel: "Explore",
+          title: "Explore More",
+        }}
+      />
+    </Tabs>
   );
 }

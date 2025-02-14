@@ -1,11 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from "react-native";
-import { LinearGradient } from "expo-linear-gradient"; // Ensure expo-linear-gradient is installed
-import { Ionicons } from "@expo/vector-icons"; // For icons
+import { LinearGradient } from "expo-linear-gradient"; 
+import { Ionicons } from "@expo/vector-icons"; 
 import { useRouter } from "expo-router";
-const router = useRouter();
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
     <ImageBackground 
       source={{ uri: 'https://images.pexels.com/photos/159490/yale-university-landscape-universities-schools-159490.jpeg?cs=srgb&dl=pexels-pixabay-159490.jpg&fm=jpg' }} 
@@ -31,7 +32,7 @@ export default function HomeScreen() {
             <Text style={styles.buttonText}>Start Virtual Tour</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.secondaryButton} onPress={() => console.log("Explore More")}>
+          <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push("/explore")}>
             <Text style={styles.secondaryButtonText}>Explore More</Text>
           </TouchableOpacity>
         </View>
