@@ -29,7 +29,7 @@ const Dashboard = () => {
           
           <Pressable 
             style={styles.button} 
-            onPress={() => router.push('/campus-map')} // Link to campus exploration page
+            onPress={() => router.push('/explorecampus')} // Link to campus exploration page
           >
             <Text style={styles.buttonText}>Explore Campus</Text>
           </Pressable>
