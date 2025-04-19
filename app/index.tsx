@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient"; 
 import { Ionicons } from "@expo/vector-icons"; 
 import { useRouter } from "expo-router";
@@ -13,12 +13,18 @@ export default function HomeScreen() {
       style={styles.background} 
       resizeMode="cover"
     >
-      {/* Gradient Overlay for Better Readability */}
       <LinearGradient colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0.2)"]} style={styles.overlay}>
+        {/* Header Location */}
         <View style={styles.header}>
           <Ionicons name="location-outline" size={28} color="white" />
           <Text style={styles.headerText}>NIT Delhi</Text>
         </View>
+
+        {/* Logo */}
+         <Image
+         source={require("../assets/images/campusdarshan.png")} 
+          style={styles.logo}
+        />
 
         {/* Title & Subtitle */}
         <View style={styles.content}>
@@ -32,9 +38,6 @@ export default function HomeScreen() {
             <Text style={styles.buttonText}>Start Virtual Tour</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push("/explore")}>
-            <Text style={styles.secondaryButtonText}>Explore More</Text>
-          </TouchableOpacity>
         </View>
       </LinearGradient>
     </ImageBackground>
@@ -62,6 +65,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     marginLeft: 5,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    resizeMode: "contain",
+    marginBottom: 10,
+    opacity: 0.9,
   },
   content: {
     alignItems: "center",

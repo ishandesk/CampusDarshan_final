@@ -1,46 +1,101 @@
 import React from "react";
-import { View, Image, StyleSheet, TouchableOpacity, Text, Dimensions } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Dimensions,
+} from "react-native";
 import { useRouter } from "expo-router";
-import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
-import Animated, { useSharedValue, useAnimatedStyle } from "react-native-reanimated";
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withDecay,
+  withTiming,
+} from "react-native-reanimated";
 
-// Get Screen Dimensions
+// Custom clamp function (since `clamp` isn't in reanimated)
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(Math.max(value, min), max);
+
 const { width, height } = Dimensions.get("window");
 
 export default function ExploreCampus() {
   const router = useRouter();
 
-  // Zoom & Pan Shared Values
   const scale = useSharedValue(1);
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
-  // Gesture Handling
-  const pinchGesture = Gesture.Pinch().onUpdate((event) => {
-    scale.value = event.scale; // Keep zoom level
-  });
+  const maxScale = 3;
+  const minScale = 1;
 
-  const panGesture = Gesture.Pan().onUpdate((event) => {
-    translateX.value = event.translationX;
-    translateY.value = event.translationY;
-  });
+  const panGesture = Gesture.Pan()
+    .onUpdate((e) => {
+      const maxOffsetX = (scale.value - 1) * width / 2;
+      const maxOffsetY = (scale.value - 1) * height / 2;
 
-  // Animated Styles
+      translateX.value = clamp(
+        translateX.value + e.changeX,
+        -maxOffsetX,
+        maxOffsetX
+      );
+      translateY.value = clamp(
+        translateY.value + e.changeY,
+        -maxOffsetY,
+        maxOffsetY
+      );
+    })
+    .onEnd((e) => {
+      const maxOffsetX = (scale.value - 1) * width / 2;
+      const maxOffsetY = (scale.value - 1) * height / 2;
+
+      translateX.value = withDecay({
+        velocity: e.velocityX,
+        clamp: [-maxOffsetX, maxOffsetX],
+      });
+      translateY.value = withDecay({
+        velocity: e.velocityY,
+        clamp: [-maxOffsetY, maxOffsetY],
+      });
+    });
+
+  const pinchGesture = Gesture.Pinch()
+    .onUpdate((e) => {
+      const nextScale = clamp(scale.value * e.scale, minScale, maxScale);
+      scale.value = nextScale;
+    });
+
+  const composed = Gesture.Simultaneous(panGesture, pinchGesture);
+
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }, { translateX: translateX.value }, { translateY: translateY.value }],
+    transform: [
+      { translateX: translateX.value },
+      { translateY: translateY.value },
+      { scale: scale.value },
+    ],
   }));
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <GestureDetector gesture={Gesture.Simultaneous(pinchGesture, panGesture)}>
+        <GestureDetector gesture={composed}>
           <Animated.View style={[styles.mapContainer, animatedStyle]}>
-            {/* Full-Screen Image */}
-            <Image source={require("../../assets/images/college1.jpg")} style={styles.map} resizeMode="cover" />
+            <Image
+              source={require("../../assets/images/college1.jpg")}
+              style={styles.map}
+              resizeMode="cover"
+            />
 
-            {/* Clickable Buildings */}
+            {/* Buttons for buildings */}
             <TouchableOpacity
-              style={[styles.buildingButton, { top: "30%", left: "40%" }]}
+              style={[styles.buildingButton, { top: "20%", left: "75%" }]}
               onPress={() => router.push("/building-details/1")}
             >
               <Text style={styles.buttonText}>Mini Campus</Text>
@@ -55,9 +110,9 @@ export default function ExploreCampus() {
 
             <TouchableOpacity
               style={[styles.buildingButton, { top: "70%", left: "20%" }]}
-              onPress={() => router.push('/adminblock')}
+              onPress={() => router.push("/adminblock")}
             >
-              <Text style={styles.buttonText}>Admin Block</Text>
+              <Text style={styles.buttonText}>Admin</Text>
             </TouchableOpacity>
           </Animated.View>
         </GestureDetector>
@@ -70,23 +125,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000",
-    alignItems: "center",
-    justifyContent: "center",
   },
   mapContainer: {
-    width: width, // Full width
-    height: height, // Full height
+    width,
+    height,
     alignItems: "center",
     justifyContent: "center",
   },
   map: {
-    width: width, // Full width
-    height: height, // Full height
+    width,
+    height,
     position: "absolute",
   },
   buildingButton: {
     position: "absolute",
-    backgroundColor: "rgba(0, 0, 255, 0.7)", // Semi-transparent blue
+    backgroundColor: "rgba(0, 0, 255, 0.7)",
     padding: 10,
     borderRadius: 10,
   },

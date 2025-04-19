@@ -1,35 +1,49 @@
-// app/_layout.tsx
-import React from "react";
-import { Tabs } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { Tabs } from 'expo-router';
+import { Ionicons, Entypo, MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 
-export default function Layout() {
+export default function TabLayout() {
   return (
     <Tabs
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          let iconName;
-          if (route.name === "index") iconName = "home-outline";
-          else if (route.name === "explore") iconName = "compass-outline";
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: "blue",
-        tabBarInactiveTintColor: "gray",
-        headerShown: false,
-      })}
+      initialRouteName="dashboard"
+      screenOptions={{
+        headerShown: false, // ✅ Hide the top header across all tabs
+        tabBarActiveTintColor: '#007bff', // Optional styling
+      }}
     >
       <Tabs.Screen
-        name="index"
+        name="dashboard"
         options={{
-          tabBarLabel: "Home",
-          title: "Home",
+          title: 'Dashboard',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="compass" color={color} size={size} />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="localarea"
         options={{
-          tabBarLabel: "Explore",
-          title: "Explore More",
+          title: 'Local Area',
+          tabBarIcon: ({ color, size }) => (
+            <Entypo name="location-pin" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="placements"
+        options={{
+          title: 'Placements',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="business-center" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="narration"
+        options={{
+          title: 'Narration',
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="headphones" color={color} size={size} />
+          ),
         }}
       />
     </Tabs>
