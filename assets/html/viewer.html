@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <title>360 Viewer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/photo-sphere-viewer@4/dist/photo-sphere-viewer.css" />
     <style>
       html, body {
         margin: 0;
         height: 100%;
-        overflow: hidden;
         background: #000;
       }
       #viewer {
@@ -16,7 +16,6 @@
         height: 100vh;
       }
     </style>
-    <link rel="stylesheet" href="https://unpkg.com/photo-sphere-viewer@4/dist/photo-sphere-viewer.css" />
   </head>
   <body>
     <div id="viewer"></div>
@@ -26,20 +25,13 @@
     <script src="https://unpkg.com/photo-sphere-viewer@4/dist/photo-sphere-viewer.js"></script>
 
     <script>
-      // React Native will replace this string with a full data URI like: data:image/jpeg;base64,...
-      const imgBase64 = '###BASE64_IMAGE_HERE###';
+      const imageData = '###BASE64_IMAGE_HERE###';
 
       new PhotoSphereViewer.Viewer({
         container: document.getElementById('viewer'),
-        panorama: imgBase64,
+        panorama: '###BASE64_IMAGE_HERE###',
         defaultZoomLvl: 50,
-        mousewheel: false,
-        navbar: [
-          'zoom',
-          'fullscreen',
-        ],
-        touchmoveTwoFingers: false,
-        defaultLongLat: { longitude: 0, latitude: 0 }
+        navbar: ['zoom', 'fullscreen'],
       });
     </script>
   </body>
