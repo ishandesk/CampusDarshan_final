@@ -55,7 +55,7 @@ export default function Mini3() {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/nit.jpg')}
+      source={require('../../assets/images/delhi.jpg')}
       style={styles.background}
       resizeMode="cover"
     >
@@ -63,6 +63,12 @@ export default function Mini3() {
         <Button title="Health Center" onPress={handleOpenPhotoSphere} />
 
         <View style={styles.arrowContainer}>
+        <TouchableOpacity onPress={() => router.push('/minicampus/mini4')}>
+            <Image
+              source={require('../../assets/images/forward.png')}
+              style={styles.arrow}
+            />
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => router.push('/minicampus/mini2')}>
             <Image
               source={require('../../assets/images/left.png')}

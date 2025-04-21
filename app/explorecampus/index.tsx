@@ -103,7 +103,7 @@ export default function ExploreCampus() {
 
             <TouchableOpacity
               style={[styles.buildingButton, { top: "50%", left: "60%" }]}
-              onPress={() => router.push("/building-details/2")}
+              onPress={() => router.push("/ground")}
             >
               <Text style={styles.buttonText}>Ground</Text>
             </TouchableOpacity>

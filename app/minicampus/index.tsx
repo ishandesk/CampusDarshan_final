@@ -7,6 +7,7 @@ import {
   Image,
   Alert,
   ImageBackground,
+  Text,
 } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
@@ -55,10 +56,18 @@ export default function MiniCampus() {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/nit.jpg')} 
+      source={require('../../assets/images/delhi.jpg')}
       style={styles.background}
       resizeMode="cover"
     >
+      {/* GROUND BUTTON */}
+      <TouchableOpacity
+        style={styles.groundButton}
+        onPress={() => router.push('/ground')}
+      >
+        <Text style={styles.groundButtonText}>Ground</Text>
+      </TouchableOpacity>
+
       <View style={styles.container}>
         <Button title="Mini Campus" onPress={handleOpenPhotoSphere} />
 
@@ -95,5 +104,20 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     tintColor: 'black',
+  },
+  groundButton: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    zIndex: 1,
+  },
+  groundButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2C3E50',
   },
 });

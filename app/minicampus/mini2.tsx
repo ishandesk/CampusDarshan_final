@@ -55,14 +55,20 @@ export default function Mini2() {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/nit.jpg')}
+      source={require('../../assets/images/delhi.jpg')}
       style={styles.background}
       resizeMode="cover"
     >
       <View style={styles.container}>
-        <Button title="Waiting Area" onPress={handleOpenPhotoSphere} />
+        <Button title="Reception" onPress={handleOpenPhotoSphere} />
 
         <View style={styles.arrowContainer}>
+        <TouchableOpacity onPress={() => router.push('/minicampus/mini5')}>
+            <Image
+              source={require('../../assets/images/forward.png')}
+              style={styles.arrow}
+            />
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => router.push('/minicampus')}>
             <Image
               source={require('../../assets/images/down.png')}
@@ -72,7 +78,7 @@ export default function Mini2() {
 
           <TouchableOpacity onPress={() => router.push('/minicampus/mini3')}>
             <Image
-              source={require('../../assets/images/forward.png')}
+              source={require('../../assets/images/right.png')}
               style={styles.arrow}
             />
           </TouchableOpacity>
