@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const GEMINI_API_KEY = 'AIzaSyDxdnHMOLA3PAaeOjZwgoSOu4W5VwRVFYs';
+const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY';
 
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=${GEMINI_API_KEY}`;
 
